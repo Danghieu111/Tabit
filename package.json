@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "minify": "terser src/tabit.js -o tabit.min.js && csso src/tabit.css -o tabit.min.css"
+  },
+  "dependencies": {
+    "csso-cli": "^4.0.2",
+    "terser": "^5.47.1"
+  }
+}
