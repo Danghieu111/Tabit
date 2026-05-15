@@ -45,7 +45,7 @@ Tabit.prototype.init = function() {
     const tabSelector = this.params.get(this.selector)
     const tabActiveLocal = (this.option.rememberState && location.search && this.tabs.find(tab => tab.getAttribute('href').replace(this._cleanRegex, "") === tabSelector)) || this.tabs[this.firstActive]
 
-    this.activeTab(tabActiveLocal, false)
+    this.activeTab(tabActiveLocal, false, false)
 
     this.tabs.forEach(tab => {
         tab.onclick = (e) => {
@@ -58,8 +58,8 @@ Tabit.prototype.init = function() {
 
 Tabit.prototype._tryActiveTab = function(tab) {
     if (this.currentTab != tab) {
-        this.activeTab(tab)
         this.currentTab = tab
+        this.activeTab(tab)
     }
 }
 
@@ -68,7 +68,7 @@ Tabit.prototype.handleTabClick = function(tab, e) {
     this._tryActiveTab(tab)
 }
 
-Tabit.prototype.activeTab = function(tab, triggerOnChange = true) {
+Tabit.prototype.activeTab = function(tab, triggerOnChange = true, updateUrl = this.option.rememberState) {
     this.tabs.forEach(tab => {
         tab.closest('li').classList.remove(this.option.classActive)
     })
@@ -80,7 +80,7 @@ Tabit.prototype.activeTab = function(tab, triggerOnChange = true) {
 
     document.querySelector(tab.getAttribute('href')).hidden = false
 
-    if (this.option.rememberState) {
+    if (updateUrl) {
         const params = new URLSearchParams(location.search)
         params.set(this.selector, tab.getAttribute('href').replace(this._cleanRegex, ''))
         history.replaceState(null, null, `?${params}`)

@@ -5,39 +5,110 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="src/tabit.css">
+
+    <style>
+        .demo1 {
+            background-color: #999;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .tabs1 {
+            display: flex;
+            list-style: none;
+        }
+
+        .tabs1 a{
+            display: block;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #ccc;
+        }
+
+        .tabs1 .tabit--active a {
+            background-color: #fff;
+        }
+
+        .panels1 .tab-content {
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        .demo2 {
+            margin-top: 100px;
+            display: flex;
+        }
+
+        .demo2 .tabs1 {
+            padding: 20px;
+        }
+
+        .demo2 .panels2 {
+            padding-left: 20px;
+        }
+
+        .demo2 a {
+            padding: 10px 20px;
+            display: block;
+        }
+
+        .tab-wapper {
+            position: relative;
+        }
+
+        .tab-wapper .active-line {
+            position: absolute;
+            bottom: 0;
+            height: 2px;
+            background-color: red;
+        }
+
+
+        .active-line.enable-transition {
+    transition: transform 0.3s ease, width 0.3s ease;
+}
+        
+    </style>
 </head>
 <body>
 
 <!-- container -->
-    <ul id="tabs">
-        <!-- tabs -->
-        <li>
-            <a href="#tab1">Tab 1</a>
-        </li>
-        <li>
-            <a href="#tab2">Tab 2</a>
-        </li>
-        
-        <li>
-            <a href="#tab3">Tab 3</a>
-        </li>
-    </ul>
+ <div class="demo1">
+    <div class="tab-wapper">
+        <ul id="tabs" class="tabs1">
+            <!-- tabs -->
+            <li>
+                <a href="#tab1">Tab 1</a>
+            </li>
+            <li>
+                <a href="#tab2">Tab 2</a>
+            </li>
+            
+            <li>
+                <a href="#tab3">Tab 3</a>
+            </li>
+        </ul>
+        <div class="active-line"></div>
+    </div>
 
     <!-- panel -->
 
-    <div id="tab1" class="tab-content">
-        Tab 1 content
+    <div class="panels1">
+        <div id="tab1" class="tab-content">
+            Tab 1 content
+        </div>
+        <div id="tab2" class="tab-content">
+            Tab 2 content
+        </div>
+        <div id="tab3" class="tab-content">
+            Tab 3 content
+        </div>
     </div>
-    <div id="tab2" class="tab-content">
-        Tab 2 content
-    </div>
-    <div id="tab3" class="tab-content">
-        Tab 3 content
-    </div>
+ </div>
 
-
-
-        <ul id="tabs1">
+ <div class="demo2">
+    <ul id="tabs1">
         <!-- tabs -->
         <li>
             <a href="#taba">Tab A</a>
@@ -52,18 +123,20 @@
     </ul>
 
     <!-- panel -->
+    <div class="panels2">
+        <div id="taba" class="tab-content">
+            Tab A content
+        </div>
+        <div id="tabb" class="tab-content">
+            Tab B content
+        </div>
+        <div id="tabc" class="tab-content">
+            Tab C content
+        </div>
+    </div>
+ </div>
 
-    <div id="taba" class="tab-content">
-        Tab A content
-    </div>
-    <div id="tabb" class="tab-content">
-        Tab B content
-    </div>
-    <div id="tabc" class="tab-content">
-        Tab C content
-    </div>
 </body>
-
 
 </html>
 
@@ -74,10 +147,24 @@
         firstActiveElement: 0,
         rememberState: true,
         onChange: (data) => {
-            // data.tab, data.panel
-            console.log(data)
+            updateActiveLine()
         }
     })
+
+    function updateActiveLine(animate = false) {
+        const currentTab = tabs.currentTab.closest('li')
+        const activeLine = tabs.container.nextElementSibling
+        activeLine.style.width =  `${currentTab.offsetWidth}px`
+        activeLine.style.transform = `translateX(${currentTab.offsetLeft}px)`
+
+        if (animate) {
+            requestAnimationFrame(() => {
+                activeLine.classList.add('enable-transition')
+            })
+        }
+    }
+
+    updateActiveLine(true)
 
     const tabs2 = new Tabit('#tabs1', {
         firstActiveElement: 0,
