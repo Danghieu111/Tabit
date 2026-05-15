@@ -4,11 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="src/tablit.css">
+    <link rel="stylesheet" href="src/tabit.css">
 </head>
 <body>
-    
+
+<!-- container -->
+    <ul id="tabs">
+        <!-- tabs -->
+        <li>
+            <a href="#tab1">Tab 1</a>
+        </li>
+        <li>
+            <a href="#tab2">Tab 2</a>
+        </li>
+        
+        <li>
+            <a href="#tab3">Tab 3</a>
+        </li>
+    </ul>
+
+    <!-- panel -->
+
+    <div id="tab1" class="tab-content">
+        Tab 1 content
+    </div>
+    <div id="tab2" class="tab-content">
+        Tab 2 content
+    </div>
+    <div id="tab3" class="tab-content">
+        Tab 3 content
+    </div>
+
+
+
+        <ul id="tabs1">
+        <!-- tabs -->
+        <li>
+            <a href="#taba">Tab A</a>
+        </li>
+        <li>
+            <a href="#tabb">Tab B</a>
+        </li>
+        
+        <li>
+            <a href="#tabc">Tab C</a>
+        </li>
+    </ul>
+
+    <!-- panel -->
+
+    <div id="taba" class="tab-content">
+        Tab A content
+    </div>
+    <div id="tabb" class="tab-content">
+        Tab B content
+    </div>
+    <div id="tabc" class="tab-content">
+        Tab C content
+    </div>
 </body>
+
+
 </html>
 
-<script src="src/tablit.js"></script>
+<script src="./src/tabit.js"></script>
+
+<script>
+    const tabs = new Tabit('#tabs', {
+        firstActiveElement: 0,
+        rememberState: true,
+        onChange: (data) => {
+            // data.tab, data.panel
+            console.log(data)
+        }
+    })
+
+    const tabs2 = new Tabit('#tabs1', {
+        firstActiveElement: 0,
+        rememberState: true
+    })
+</script>
